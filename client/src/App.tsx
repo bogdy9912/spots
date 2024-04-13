@@ -9,7 +9,7 @@ export default function App() {
 
   async function sayHello() {
     // const res = await HelloWorldClass.hello(name);
-    const re = await GptCaller.askChatGPT(name);
+    const re = await GptCaller.askChatGPTLocal(name);
     setResponse(re);
   }
 

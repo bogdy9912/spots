@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import { GenezioDeploy, GenezioMethod } from "@genezio/types";
+import { GenezioDeploy, GenezioHttpRequest, GenezioMethod } from "@genezio/types";
 
 @GenezioDeploy()
 export class GptCaller {
@@ -22,7 +22,7 @@ export class GptCaller {
   }
   // send a request to the ChatGPT API to get the requestText
   @GenezioMethod({ type: "http" })
-  async askChatGPT(requestText: any) {
+  async askChatGPT(requestText: GenezioHttpRequest) {
     console.log("DEBUG 1");
 
     console.log("This is the req text: ", requestText.body);
@@ -43,5 +43,24 @@ export class GptCaller {
     return { statusCode: "200", body: completion?.choices[0].message.content };
   }
 
+  async askChatGPTLocal(requestText: string) {
+    console.log("DEBUG 1");
 
+    console.log("This is the req text: ", requestText);
+
+    const completion = await this.openai?.chat.completions.create({
+      // the used model at the moment of writing this article
+      model: "gpt-3.5-turbo",
+      // tells ChatGPT to rephrase the requestText
+      messages: [{ role: "user", content: requestText }],
+    });
+
+    console.log("DEBUG 2");
+
+    console.log(
+      `DEBUG: request: ${requestText}, response: ${completion?.choices[0].message}`
+    );
+    
+    return { statusCode: "200", body: completion?.choices[0].message.content};
+  }
 }
