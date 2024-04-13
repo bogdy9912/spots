@@ -9,7 +9,7 @@ import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 @GenezioDeploy()
-export class StripeService {
+export class StripeService { 
   async createCheckoutSession(): Promise<string> {
     const stripePromise = await stripe.checkout.sessions.create({
       line_items: [
