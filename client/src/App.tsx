@@ -1,13 +1,16 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
+import { GptCaller } from "@genezio-sdk/spots";
 
 export default function App() {
   const [name, setName] = useState("");
   const [response, setResponse] = useState("");
 
   async function sayHello() {
-    setResponse("TODO: Not Implemented");
+    // const res = await HelloWorldClass.hello(name);
+    const re = await GptCaller.askChatGPT(name);
+    setResponse(re);
   }
 
   return (

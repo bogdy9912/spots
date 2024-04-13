@@ -45,3 +45,4 @@ frontend:
     start:
       - npm install
       - npm run dev
+  subdomain: salmon-static-constrictor
