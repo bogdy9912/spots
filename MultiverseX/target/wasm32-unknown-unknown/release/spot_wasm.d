@@ -1,0 +1,1 @@
+/home/bogdan/Documents/spots-contracts/spot/target/wasm32-unknown-unknown/release/spot_wasm.wasm: /home/bogdan/Documents/spots-contracts/spot/src/spot.rs /home/bogdan/Documents/spots-contracts/spot/wasm/src/lib.rs
