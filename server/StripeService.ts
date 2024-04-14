@@ -11,7 +11,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 @GenezioDeploy()
 export class StripeService { 
   async createCheckoutSession(): Promise<string> {
-    const stripePromise = await stripe.checkout.sessions.create({
+    const stripePromise = await stripe.checkout.sessions.create({ customer: "cus_PvDrHyWCmGPw5e",
       line_items: [
         {
           price_data: {

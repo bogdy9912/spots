@@ -12,16 +12,15 @@ export class GptCaller {
     });
   }
 
-  @GenezioMethod({ type: "http" })
   async dummyChatGpt(input: string) {
     return { statusCode: "200", body: "I've got you text :wink:" };
   }
 
-
+  
   async askChatGPTLocal(requestText: string) {
      
     //CARD CASE
-    if(requestText == "card"){
+    if(requestText.includes("card")){
       let stripe: StripeService = new StripeService();
       stripe.createCheckoutSession();
     }
@@ -37,6 +36,38 @@ export class GptCaller {
         model: "gpt-3.5-turbo",
         // tells ChatGPT to rephrase the requestText
         messages: [{ role: "user", content: requestText }],
+      });
+      return { statusCode: "200", body: completion?.choices[0].message.content};
+    }
+    
+    // console.log(
+    //   `DEBUG: request: ${requestText}, response: ${completion?.choices[0].message}`
+    // );
+    
+    return 1;
+
+  }
+
+  @GenezioMethod({ type: "http" })
+  async askChatGPT(requestText: GenezioHttpRequest) {
+     
+    //CARD CASE
+    if(requestText.body.includes("card")){
+      let stripe: StripeService = new StripeService();
+      stripe.createCheckoutSession();
+    }
+    
+    //CRYPTO CASE
+
+
+    // CHAT GPT CASE
+    
+    else{
+      const completion = await this.openai?.chat.completions.create({
+        // the used model at the moment of writing this article
+        model: "gpt-3.5-turbo",
+        // tells ChatGPT to rephrase the requestText
+        messages: [{ role: "user", content: requestText.body }],
       });
       return { statusCode: "200", body: completion?.choices[0].message.content};
     }
